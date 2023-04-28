@@ -1,25 +1,65 @@
-import logo from './logo.svg';
+import { useState }  from 'react';
 import './App.css';
+import Square from './Square';
 
-function App() {
+
+const App = () => {
+  //initialize the state for games squares to an array of 9 empty strings
+  const [squares, setSquares] = useState(["", "", "", "", "", "", "", "", ""])
+  //initialize state of player variable to the boolean of true
+  const [player, setPlayer] = useState(true);
+  
+  const handleCLick = () => {
+    setSquares(["", "", "", "", "", "", "", "", ""])
+    setPlayer(true)
+  }
+  
+  const calculateWinner = arr => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+  lines.forEach((e) => {
+    const [a, b ,c] = e
+    if (
+      arr[a] &&
+      arr[a] === arr[b] &&
+      arr[a] === arr[c]
+      ){
+        return `${arr[a]} won!`;
+      }
+      return "Who will win?";
+    })
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+        <span>{calculateWinner(squares)}</span>
+        <div className="container">
+          {squares.map((val, index) => {
+            return (
+            <Square
+              squares={squares}
+              setSquares={setSquares}
+              player={player}
+              setPlayer={setPlayer}
+              squareValue={val} 
+              index={index}
+            />);
+          }) 
+          }
+        </div>
+          <button onClick={handleCLick}>Reset Game</button>  
+      </div>
+    );
+  }
+    
+    
+    
+    export default App;
+    

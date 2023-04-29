@@ -10,6 +10,7 @@ const App = () => {
   const [player, setPlayer] = useState(true);
   
   const handleCLick = () => {
+    console.log('resetting!!!')
     setSquares(["", "", "", "", "", "", "", "", ""])
     setPlayer(true)
   }
@@ -25,17 +26,16 @@ const App = () => {
       [0, 4, 8],
       [2, 4, 6]
     ];
-  lines.forEach((e) => {
-    const [a, b ,c] = e
-    if (
-      arr[a] &&
-      arr[a] === arr[b] &&
-      arr[a] === arr[c]
-      ){
+    for (let i = 0; i < lines.length; i++){
+  // lines.forEach((e) => {
+    // const [a, b ,c] = e
+      const [a, b, c] = lines[i];
+    if (arr[a] && arr[a] === arr[b] && arr[a] === arr[c]){
         return `${arr[a]} won!`;
       }
+    }
       return "Who will win?";
-    })
+    // })
   }
   return (
     <div className="App">
@@ -55,11 +55,10 @@ const App = () => {
           }
         </div>
           <button onClick={handleCLick}>Reset Game</button>  
-      </div>
+        </div>
     );
-  }
+}
     
     
-    
-    export default App;
+export default App;
     
